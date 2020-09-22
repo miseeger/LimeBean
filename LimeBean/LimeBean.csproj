@@ -1,89 +1,43 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7499BFB8-59D8-4784-82E3-A75963DD8CA5}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LimeBean</RootNamespace>
+    <TargetFrameworks>net40;netstandard2.0</TargetFrameworks>
     <AssemblyName>LimeBean</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <AssemblyVersion>1.3.0</AssemblyVersion>
+    <FileVersion>1.3.0</FileVersion>
+    <Version>1.3.0</Version>
+    <Description>Hybrid-ORM for .Net</Description>
+    <PackageId>LimeBean</PackageId>
+    <Authors>Nick Lucas</Authors>
+    <Product>LimeBean</Product>
+    <Copyright>Copyright (c) 2014-2016 Aleksey Martynov, 2016-2020 Nick Lucas</Copyright>
+    <PackageTags>orm,mysql,sqlite,postgres,postgresql,netcore</PackageTags>
+    <PackageProjectUrl>https://nick-lucas.github.io/LimeBean</PackageProjectUrl>
+    <PackageLicense>https://raw.githubusercontent.com/Nick-Lucas/LimeBean/master/LICENSE.txt</PackageLicense>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\bin\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
+  <!-- Make internals visible for test project -->
+  <!-- https://www.meziantou.net/declaring-internalsvisibleto-in-the-csproj.htm -->
   <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>LimeBean.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <!-- Conditionally obtain references for the .NET Framework 4.0 target -->
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+    <!--<Reference Include="Microsoft.CSharp" />-->
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
+
+  <!-- Conditionally obtain references for the NetStandard 2.0 target -->
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <PackageReference Include="System.Data.SqlClient" Version="4.5.0" />
+    <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.3.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="BeanApi.cs" />
-    <Compile Include="BeanApiLinker.cs" />
-    <Compile Include="BeanOptions.cs" />
-    <Compile Include="BeanFactory.cs" />
-    <Compile Include="CommonDatabaseDetails.cs" />
-    <Compile Include="CompoundKey.cs" />
-    <Compile Include="ConnectionContainer.cs" />
-    <Compile Include="DatabaseAccess.cs" />
-    <Compile Include="DatabaseBeanFinder.cs" />
-    <Compile Include="DatabaseStorage.cs" />
-    <Compile Include="DbCommandDescriptor.cs" />
-    <Compile Include="Bean.cs" />
-    <Compile Include="BeanObserver.cs" />
-    <Compile Include="Cache.cs" />
-    <Compile Include="Exceptions\ColumnNotFoundException.cs" />
-    <Compile Include="Interfaces\IBean.cs" />
-    <Compile Include="Interfaces\IBeanApi.cs" />
-    <Compile Include="Interfaces\IBeanOptions.cs" />
-    <Compile Include="Interfaces\IBeanDispenser.cs" />
-    <Compile Include="Interfaces\IBeanFactory.cs" />
-    <Compile Include="PgSqlDetails.cs" />
-    <Compile Include="Portability.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="Interfaces\IBeanCrud.cs" />
-    <Compile Include="Interfaces\IBeanFinder.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Interfaces\IDatabaseDetails.cs" />
-    <Compile Include="Interfaces\IKeyAccess.cs" />
-    <Compile Include="Interfaces\IStorage.cs" />
-    <Compile Include="BeanCrud.cs" />
-    <Compile Include="Interfaces\IDatabaseAccess.cs" />
-    <Compile Include="Interfaces\ITransactionSupport.cs" />
-    <Compile Include="Interfaces\IValueRelaxations.cs" />
-    <Compile Include="KeyUtil.cs" />
-    <Compile Include="MariaDbDetails.cs" />
-    <Compile Include="MsSqlDetails.cs" />
-    <Compile Include="SQLiteDetails.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace LimeBean {
 
-#if NETCORE
+#if NETSTANDARD
 
     partial class Extensions {
         internal static bool IsEnum(this Type type) {
@@ -32,7 +32,7 @@ namespace LimeBean {
 
 #endif
 
-#if !NETCORE
+#if !NETSTANDARD
 
     partial class BeanApi {
         public BeanApi(string connectionString, string providerName)
